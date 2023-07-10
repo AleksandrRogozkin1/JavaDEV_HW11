@@ -1,10 +1,10 @@
 package org.example.enitty;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
@@ -14,4 +14,8 @@ public class Planet {
     private long id;
     @Column
     private String name;
+    @OneToMany(mappedBy="fromPlanetId", fetch = FetchType.LAZY, cascade = CascadeType.ALL,orphanRemoval = true)
+    private Set<Ticket> ticketsFromPlanet = new HashSet<>();
+    @OneToMany(mappedBy="toPlanetId", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Ticket> ticketsToPlanet = new HashSet<>();
 }

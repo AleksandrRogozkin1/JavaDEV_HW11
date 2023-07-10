@@ -19,7 +19,7 @@ public class PlanetCrudService {
         try (Session session = HibernateUtils.getInstance().getSessionFactory().openSession()) {
             return session.get(Planet.class, id);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Invalid id");
             return null;
         }
     }
@@ -31,6 +31,8 @@ public class PlanetCrudService {
             planet.setId(id);
             session.merge(planet);
             transaction.commit();
+        } catch (Exception e) {
+            System.out.println("Invalid id");
         }
     }
 
@@ -43,6 +45,8 @@ public class PlanetCrudService {
                 session.remove(planet);
                 transaction.commit();
             }
+        } catch (Exception e) {
+            System.out.println("Invalid id");
         }
     }
 

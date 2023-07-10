@@ -1,39 +1,38 @@
 package org.example.crudServices;
 
 
-import org.example.enitty.Client;
+import org.example.enitty.Ticket;
 import org.example.hibernate.HibernateUtils;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+public class TicketCrudService {
 
-public class ClientCrudService {
-
-
-    public void createClient(Client client) {
+    public void createTicket(Ticket ticket) {
         Transaction transaction;
         try (Session session = HibernateUtils.getInstance().getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            session.persist(client);
+            session.persist(ticket);
             transaction.commit();
         }
     }
 
-    public Client getById(long id) {
+    public Ticket getById(long id) {
         try (Session session = HibernateUtils.getInstance().getSessionFactory().openSession()) {
-            return session.get(Client.class, id);
+            return session.get(Ticket.class, id);
         } catch (Exception e) {
             System.out.println("Invalid id");
             return null;
+
         }
     }
 
-    public void updateClient(Client client, Integer id) {
+    public void updateTicket(Ticket ticket, Integer id) {
         Transaction transaction;
         try (Session session = HibernateUtils.getInstance().getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            client.setId(id);
-            session.merge(client);
+            ticket.setId(id);
+            session.merge(ticket);
             transaction.commit();
         } catch (Exception e) {
             System.out.println("Invalid id");
@@ -44,15 +43,13 @@ public class ClientCrudService {
         Transaction transaction;
         try (Session session = HibernateUtils.getInstance().getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            Client client = session.get(Client.class, id);
-            if (client != null) {
-                session.remove(client);
+            Ticket ticket = session.get(Ticket.class, id);
+            if (ticket != null) {
+                session.remove(ticket);
                 transaction.commit();
             }
         } catch (Exception e) {
             System.out.println("Invalid id");
         }
     }
-
-
 }
